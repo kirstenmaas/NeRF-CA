@@ -1,0 +1,11 @@
+method: grid
+metric:
+  goal: minimize
+  name: train_loss
+parameters:
+  data_name:
+    values: ['XCAT-V1']
+
+early_terminate:
+  type: hyperband
+  max_iter: 50000

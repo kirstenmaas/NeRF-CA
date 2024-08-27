@@ -1,0 +1,93 @@
+wandb_sweep_yaml = 'temporal/sweep-composite.yaml'
+use_wandb = True
+
+data_name = 'MAGIX-LCA'
+x_ray_type = 'rotation'
+take_mask = False
+data_size = 200
+
+data_limited_range = 60
+data_step_size = 120
+data_numb_angles = 0
+data_time_range_start = 0
+data_time_range_end = 10
+
+use_experiment_name = False
+experiment_name = 'one-frame-resp'
+
+debug_mode = False
+only_prepare_data = False
+visualize_geometry = False
+
+use_time_latents = True
+num_time_dim = 8
+
+depth_samples_per_ray_coarse = 500
+depth_samples_per_ray_fine = 0
+
+n_iters = 200000
+display_every = 500
+save_every = 1000
+batch_size = 32768
+log_every = 1
+
+lr = 1e-3
+lr_end_factor = 0.01
+lr_decay_steps = 150000
+
+sample_mode = 'pixel'
+sample_weights_name = None
+img_sample_size = 1024
+var_sample_perc = 50
+var_sample_thre = 3
+raw_noise_std = 0
+
+entro_mask_thre = 1e-4
+entro_use_weighting = True
+entro_weighted_thresh = 0.03
+
+favor_s_weight_start = 1e-12
+favor_s_weight_end = 1e-10
+favor_s_weight_delay_steps = 40000
+
+dynamic_entro_weight_start = 1e-10
+dynamic_entro_weight_end = 1e-8
+
+occl_weight_start = 1e-8
+occl_weight_end = 1e-4
+
+l1_weight_start = 1e-8
+l1_weight_end = 1e-15
+
+hyperparam_decay_steps = 100000
+
+weighted_loss_max = 1
+weighted_loss = 'var'
+occl_reg_perc = 0.2
+
+temp_pos_enc = 'free_windowed'
+temp_pos_enc_basis = 12
+temp_pos_enc_fourier_sigma = 0
+temp_pos_enc_window_start = 1
+temp_pos_enc_window_decay_steps = 150000
+
+static_pos_enc = 'free_windowed'
+static_pos_enc_basis = 12
+static_pos_enc_fourier_sigma = 0
+static_pos_enc_window_start = 1
+static_pos_enc_window_decay_steps = 150000
+
+output_activation = 'softplus'
+favor_s_opt = None
+favor_s_opt_weight = 0
+
+temp_num_early_layers = 4
+temp_num_late_layers = 0
+temp_num_filters = 128
+
+static_num_early_layers = 4
+static_num_late_layers = 0
+static_num_filters = 128
+
+temp_num_filters_fine = 64
+static_num_filters_fine = 64
