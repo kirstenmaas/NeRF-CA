@@ -24,6 +24,11 @@ We validate our approach quantitatively and qualitatively using 4D phantom datas
 ![Overview of the proposed input optimization method](https://github.com/kirstenmaas/NeRF-CA/blob/main/imgs/overview.png)
 
 ## Repository
+This repository contains the code to preprocess the 4D phantom datasets and the implementation of the PyTorch models. The 4D phantom datasets can be acquired from [XCAT](https://cvit.duke.edu/resource/xcat-phantom-program/) and [MAGIX](https://www.osirix-viewer.com/resources/dicom-image-library/). We utilize the [TIGRE](https://github.com/CERN/TIGRE?tab=readme-ov-file) repository to generate the 2D CA sequences from the 4D phantom datasets.
+
+- <b>Preparing datasets for training:</b> The main code can be found in <b>preprocess/datatoray.py</b>. It expects pre-generated .npy files of the 3D+t volumes, similar to the [TIGRE](https://github.com/CERN/TIGRE?tab=readme-ov-file) input. These files are generated through the XCAT dataset pre-processing code <b>preprocess/xcat.py</b> or MAGIX dataset pre-processing code <b>preprocess/preprocess_ccta.py</b>.
+- <b>Models</b>: The models are defined in the /model folder.
+- <b>Training</b>: The training code 
 
 ## Citation
 If you use this code for your research, please cite our work:
