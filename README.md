@@ -1,4 +1,8 @@
-## NeRF-CA: Dynamic reconstruction of X-ray Coronary Angiography with extremely sparse-views
+# NeRF-CA: Dynamic reconstruction of X-ray Coronary Angiography with extremely sparse-views
+
+## [Project Page]() | [Paper]()
+
+## About NeRF-CA
 
 Dynamic three-dimensional (4D) reconstruction from two-dimensional X-ray coronary angiography (CA) remains a significant clinical problem.
 Challenges include sparse-view settings, intra-scan motion, and complex vessel morphology such as structure sparsity and background occlusion.
@@ -17,3 +21,11 @@ This setting aligns with clinical workflows while outperforming state-of-the-art
 We validate our approach quantitatively and qualitatively using 4D phantom datasets and ablation studies.
 
 ## Method Overview
+![Overview of the proposed input optimization method](https://github.com/kirstenmaas/NeRF-CA/blob/main/imgs/overview.png)
+
+## Repository
+
+## Citation
+If you use this code for your research, please cite our work:
+
+TODO
