@@ -12,7 +12,7 @@ torch.cuda.empty_cache()
 
 torch.set_printoptions(precision=10)
 
-from temporal.model_helpers import *
+from model_helpers import *
 from data_helpers import *
 from model.Temporal import Temporal
 from model.CPPN import CPPN
