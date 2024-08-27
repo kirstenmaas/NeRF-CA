@@ -28,7 +28,7 @@ This repository contains the code to preprocess the 4D phantom datasets and the 
 
 - <b>Preparing datasets for training:</b> The main code can be found in <b>preprocess/datatoray.py</b>. It expects pre-generated .npy files of the 3D+t volumes, similar to the [TIGRE](https://github.com/CERN/TIGRE?tab=readme-ov-file) input. These files are generated through the XCAT dataset pre-processing code <b>preprocess/xcat.py</b> or MAGIX dataset pre-processing code <b>preprocess/preprocess_ccta.py</b>.
 - <b>Models</b>: The models are defined in the /model folder.
-- <b>Training</b>: The training code 
+- <b>Training</b>: The training code can be found in the folder /train. Our main method can be ran through the <b>run_composite.py</b> file, for which the hyperparameters can be defined in the <b>composite.txt</b> file.
 
 ## Citation
 If you use this code for your research, please cite our work:
