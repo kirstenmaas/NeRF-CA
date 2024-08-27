@@ -131,7 +131,6 @@ dmypy.json
 # Data
 /cases
 /data
-*.png
 *.jpg
 *.npy
 *.csv
