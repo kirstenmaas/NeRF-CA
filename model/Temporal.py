@@ -7,7 +7,6 @@ class Temporal(nn.Module):
         super().__init__()
         self.version = "v0.00"
         self.model_definition = model_definition
-        # self.model_definition_nerf = model_definition_nerf
         self.device = model_definition['device']
 
         # getting the parameters
@@ -23,8 +22,7 @@ class Temporal(nn.Module):
 
         if self.use_time_latents:
             self.num_time_dim = model_definition['num_time_dim']
-            self.fixed_frame_ids = torch.arange(0, 10) #for CAVAREV
-            # self.fixed_frame_ids = np.setdiff1d(self.unique_frame_ids, self.trainable_frame_ids) #for angio
+            self.fixed_frame_ids = torch.arange(0, 10)
             self.time_latents = nn.Parameter(torch.rand((self.fixed_frame_ids.shape[0], self.num_time_dim)))
 
         self.first_act_func = nn.ReLU()
@@ -107,13 +105,6 @@ class Temporal(nn.Module):
         return block
 
     def activations(self, store_activations: bool) -> None:
-        """
-        Configure the model to retain or discard the activations during the forward pass
-
-        Args:
-            activations (bool): keep/discard the activations during inference
-        """
-
         self.store_activations = store_activations
 
         if not store_activations:
@@ -144,65 +135,20 @@ class Temporal(nn.Module):
 
         return outputs
     
-    #def forward_composite(self, x: torch.Tensor, ts: torch.Tensor, ts_ids: torch.Tensor, ts_cycles: torch.Tensor) -> torch.Tensor:
     def forward_composite(self, x: torch.Tensor, ts: torch.Tensor) -> torch.Tensor:
         input_pts = x
         time_pts = ts
 
         if self.use_time_latents:
             # to integers
-            ts_int = time_pts.flatten()
+            ts_int = time_pts.flatten().long()
 
-            # get latent vectors based on ids (for when no interpolation is needed)
-            learned_time_pts = self.time_latents[ts_int.long()]
+            # get latent vectors based on ids
+            learned_time_pts = self.time_latents[ts_int]
 
         outputs = self.query_time(input_pts, learned_time_pts)
 
         return outputs
-    
-    def interpolate_time_latents(self, learned_time_pts, ts_int, ts_interp, max_frame_nb):
-        unique_frame_ids = torch.Tensor(self.fixed_frame_ids).to(self.device)
-        ts_int_repeat = ts_int.unsqueeze(-1).repeat(1, max_frame_nb+1).double()
-        unique_frame_ids_repeat = unique_frame_ids.unsqueeze(0).repeat(ts_int_repeat.shape[0], 1)
-        
-        # reduce the integer times to maintain within the cycle time
-        cyclic_ts_int_repeat = ts_int_repeat % (max_frame_nb+1)
-
-        # get the nearest integer time for the time (which may not be integer because of learned offset)
-        # we need to find two ids (floor & ceil), the first one should be correct from here
-        ts_closest, ts_closest_id = torch.sort(torch.abs(cyclic_ts_int_repeat - unique_frame_ids_repeat), dim=-1)
-
-        # check if we get numbers beyond the cycle
-        ts_cycl = torch.argwhere(ts_closest[:,1] > 1).flatten()
-        # ts_cycl = torch.argwhere(ts_closest[:,1] > 1).flatten()
-        # print('ts_cycl', ts_cycl)
-
-        # cyclic trainable frame ids (we restart at 0)
-        # TODO: not sure if this logic is 100% correct for all cases
-        if len(ts_cycl) > 0:
-            # if value is minus we take the "1" of the cycle, otherwise we take the "0" of the cycle
-            # the second id (for the ceil func) is incorrect when we go outside of the cycle, so we find it based on the remainder
-            ts_int_repeat[ts_cycl] = ts_int_repeat[ts_cycl].double() % ( max_frame_nb + 1)
-
-            _, cyclic_ts_closest_id = torch.sort(torch.abs(ts_int_repeat[ts_cycl] - max_frame_nb - 1 - unique_frame_ids_repeat[ts_cycl]), dim=-1, descending=False)
-            ts_closest_id[ts_cycl, 1] = cyclic_ts_closest_id[:, 0]
-
-        # get the final floor and ceiling pts
-        ts_closest_pts = unique_frame_ids[ts_closest_id[ts_interp, :2]]
-        # print('ts_closest_pts', ts_closest_pts)
-
-        # interpolate
-        start_pts = self.time_latents[ts_closest_pts[:,0].long()]
-        end_pts = self.time_latents[ts_closest_pts[:,1].long()]
-
-        weights = (ts_int[ts_interp].flatten() % (max_frame_nb+1) - ts_closest_pts[:,0]).unsqueeze(-1).repeat(1, start_pts.shape[1])
-        # print('weights', weights)
-        interpolated = torch.lerp(start_pts, end_pts, weights)
-
-        # update only interpolated pts
-        learned_time_pts[ts_interp] = interpolated
-
-        return learned_time_pts
 
     def pos_enc(self, values, pos_enc_basis):
         input_values = values
@@ -246,7 +192,6 @@ class Temporal(nn.Module):
         if current_iter < max_iter:
             freq_mask = np.zeros(pos_enc_basis)
             ptr = (pos_enc_basis * current_iter) / max_iter + self.pos_enc_window_start
-            # ptr = ptr if ptr < pos_enc_basis / 3 else pos_enc_basis / 3
             int_ptr = int(ptr)
 
             freq_mask[: int_ptr + 1] = 1.0  # assign the integer part
@@ -259,18 +204,9 @@ class Temporal(nn.Module):
             self.windowed_alpha = pos_enc_basis + 1
     
     def save(self, filename: str, training_information: dict) -> None:
-        """
-        Save the CPPN model
-        
-
-        Args:
-            filename (str): path filepath on which the model will be saved
-            training_information (dict): dictionary containing information on the training
-        """
         save_parameters = {
             'version': self.version,
             'parameters': self.model_definition,
-            # 'nerf_parameters': self.model_definition_nerf,
             'training_information': training_information,
             'model': self.state_dict(),
         }

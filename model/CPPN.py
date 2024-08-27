@@ -3,22 +3,7 @@ import torch.nn as nn
 import numpy as np
 
 class CPPN(nn.Module):
-    """
-    A CPPN model, mapping a number of input coordinates to a multidimensional output (e.g. color)
-    """
     def __init__(self, model_definition: dict) -> None:
-        """
-        Args:
-            model_definition: dictionary containing all the needed parameters
-                - num_layers: number of hidden layers
-                - num_filters: number of filters in the hidden blocks
-                - num_input_channels: number of expected input channels
-                - num_output_channels: number of expected output channels
-                - use_bias: whether biases are used
-                - pos_enc: which positional encoding to apply: 'none', 'fourier', 'windowed'
-                - pos_enc_basis: basis for positional encoding (L)
-                - num_img: number of images for training (translation/rotation)
-        """
         super().__init__()
         self.version = "v0.00"
         self.model_definition = model_definition
@@ -85,33 +70,23 @@ class CPPN(nn.Module):
 
     @staticmethod
     def __create_layer(num_in_filters: int, num_out_filters: int,
-                       use_bias: bool, activation=nn.ReLU(), dropout=0.5) -> nn.Sequential:
+                       use_bias: bool, activation=nn.ReLU(),) -> nn.Sequential:
         block = []
         block.append(nn.Linear(num_in_filters, num_out_filters, bias=use_bias)) # Dense layer
         if activation:
             block.append(activation)
-            # block.append(nn.Dropout(dropout))
         block = nn.Sequential(*block)
 
         return block
 
     def activations(self, store_activations: bool) -> None:
-        """
-        Configure the model to retain or discard the activations during the forward pass
-
-        Args:
-            activations (bool): keep/discard the activations during inference
-        """
-
         self.store_activations = store_activations
 
         if not store_activations:
             self.activation_dictionary = {}
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-
         input_pts = x
-        
         values = input_pts
 
         # positional encoding
@@ -172,7 +147,6 @@ class CPPN(nn.Module):
         if current_iter < max_iter:
             freq_mask = np.zeros(pos_enc_basis)
             ptr = (pos_enc_basis * current_iter) / max_iter + self.pos_enc_window_start
-            # ptr = ptr if ptr < pos_enc_basis / 3 else pos_enc_basis / 3
             int_ptr = int(ptr)
 
             freq_mask[: int_ptr + 1] = 1.0  # assign the integer part
@@ -188,14 +162,6 @@ class CPPN(nn.Module):
         self.windowed_alpha = (self.pos_enc_basis * current_iter) / max_iter
 
     def save(self, filename: str, training_information: dict) -> None:
-        """
-        Save the CPPN model
-
-        Args:
-            filename (str): path filepath on which the model will be saved
-            training_information (dict): dictionary containing information on the training
-        """
-
         save_parameters = {
                 'version': self.version,
                 'parameters': self.model_definition,
