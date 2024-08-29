@@ -1,6 +1,6 @@
 # NeRF-CA: Dynamic reconstruction of X-ray Coronary Angiography with extremely sparse-views
 
-## [Project Page]() | [Paper]()
+## [Project Page](https://kirstenmaas.github.io/nerfca) | [Paper]()
 
 ## About NeRF-CA
 
@@ -31,6 +31,4 @@ This repository contains the code to preprocess the 4D phantom datasets and the 
 - <b>Training</b>: The training code can be found in the folder /train. Our main method can be ran through the <b>run_composite.py</b> file, for which the hyperparameters can be defined in the <i>composite.txt</i> file.
 
 ## Citation
-If you use this code for your research, please cite our work:
-
-TODO
+If you use this code for your research, please cite our work.
