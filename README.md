@@ -1,6 +1,6 @@
 # NeRF-CA: Dynamic reconstruction of X-ray Coronary Angiography with extremely sparse-views
 
-## [Project Page](https://kirstenmaas.github.io/nerfca) | [Paper]()
+## [Project Page](https://kirstenmaas.github.io/nerfca) | [Paper](https://arxiv.org/abs/2408.16355)
 
 ## About NeRF-CA
 
