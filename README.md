@@ -3,25 +3,10 @@
 ## [Project Page](https://kirstenmaas.github.io/nerfca) | [Paper](https://arxiv.org/abs/2408.16355)
 
 ## About NeRF-CA
-
-Dynamic three-dimensional (4D) reconstruction from two-dimensional X-ray coronary angiography (CA) remains a significant clinical problem.
-Challenges include sparse-view settings, intra-scan motion, and complex vessel morphology such as structure sparsity and background occlusion.
-Existing CA reconstruction methods often require extensive user interaction or large training datasets.
-On the other hand, Neural Radiance Field (NeRF), a promising deep learning technique, has successfully reconstructed high-fidelity static scenes for natural and medical scenes.
-Recent work, however, identified that sparse-views, background occlusion, and dynamics still pose a challenge when applying NeRF in the X-ray angiography context.
-Meanwhile, many successful works for natural scenes propose regularization for sparse-view reconstruction or scene decomposition to handle dynamics.
-However, these techniques do not directly translate to the CA context, where both challenges and background occlusion are significant.
-
-This paper introduces NeRF-CA, the first step toward a 4D CA reconstruction method that achieves reconstructions from sparse coronary angiograms with cardiac motion.
-We leverage the motion of the coronary artery to decouple the scene into a dynamic coronary artery component and static background.
-We combine this scene decomposition with tailored regularization techniques.
-These techniques enforce the separation of the coronary artery from the background by enforcing dynamic structure sparsity and scene smoothness.
-By uniquely combining these approaches, we achieve 4D reconstructions from as few as four angiogram sequences.
-This setting aligns with clinical workflows while outperforming state-of-the-art X-ray sparse-view NeRF reconstruction techniques.
-We validate our approach quantitatively and qualitatively using 4D phantom datasets and ablation studies.
+Dynamic three-dimensional (4D) reconstruction from two-dimensional X-ray coronary angiography (CA) remains a significant clinical problem. Existing CA reconstruction methods often require extensive user interaction or large training datasets. Recently, Neural Radiance Field (NeRF) has successfully reconstructed high-fidelity scenes in natural and medical contexts without these requirements. However, challenges such as sparse-views, intra-scan motion, and complex vessel morphology hinder its direct application to CA data. We introduce NeRF-CA, a first step toward a fully automatic 4D CA reconstruction that achieves reconstructions from sparse coronary angiograms. To the best of our knowledge, we are the first to address the challenges of sparse-views and cardiac motion by decoupling the scene into the moving coronary artery and the static background, effectively translating the problem of motion into a strength. NeRF-CA serves as a first stepping stone for solving the 4D CA reconstruction problem, achieving adequate 4D reconstructions from as few as four angiograms, as required by clinical practice, while significantly outperforming state-of-the-art sparse-view X-ray NeRF. We validate our approach quantitatively and qualitatively using representative 4D phantom datasets and ablation studies. 
 
 ## Method Overview
-![Overview of the proposed input optimization method](https://github.com/kirstenmaas/NeRF-CA/blob/main/imgs/overview.png)
+![Overview of the method](https://github.com/kirstenmaas/NeRF-CA/blob/main/imgs/overview.png)
 
 ## Repository
 This repository contains the code to preprocess the 4D phantom datasets and the implementation of the PyTorch models. The 4D phantom datasets can be acquired from [XCAT](https://cvit.duke.edu/resource/xcat-phantom-program/) and [MAGIX](https://www.osirix-viewer.com/resources/dicom-image-library/). We utilize the [TIGRE](https://github.com/CERN/TIGRE?tab=readme-ov-file) repository to generate the 2D CA sequences from the 4D phantom datasets.
