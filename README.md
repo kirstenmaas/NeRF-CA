@@ -18,10 +18,11 @@ This repository contains the code to preprocess the 4D phantom datasets and the 
 ## Citation
 If you use this code for your research, please cite our work.
 ```
-@article{maas2024nerfca,
-    title={NeRF-CA: Dynamic Reconstruction of X-ray Coronary Angiography with Extremely Sparse-views},
-    author={Kirsten W. H. Maas and Danny Ruijters and Anna Vilanova and Nicola Pezzotti},
-    journal={arXiv preprint arXiv:2408.16355},
-    year={2024},
+@article{maas2025nerf,
+  title={NeRF-CA: Dynamic Reconstruction of X-ray Coronary Angiography with Extremely Sparse-views},
+  author={Maas, Kirsten WH and Ruijters, Danny and Vilanova, Anna and Pezzotti, Nicola},
+  journal={IEEE Transactions on Visualization and Computer Graphics},
+  year={2025},
+  publisher={IEEE}
 }
 ```
