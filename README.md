@@ -2,6 +2,11 @@
 
 ## [Project Page](https://kirstenmaas.github.io/nerfca) | [Paper](https://arxiv.org/abs/2408.16355)
 
+## News
+- July 2025: [NerT-CA](https://github.com/kirstenmaas/NerT-CA) has been accepted at MICCAI RIME 2025. NerT-CA accelerates NeRF-CA from hours to minutes and also allows for reconstruction from only 3 views!
+- June 2025: Our work has been accepted at IEEE Transactions on Visualization and Computer Graphics!
+- August 2024: We released our paper and code!
+
 ## About NeRF-CA
 Dynamic three-dimensional (4D) reconstruction from two-dimensional X-ray coronary angiography (CA) remains a significant clinical problem. Existing CA reconstruction methods often require extensive user interaction or large training datasets. Recently, Neural Radiance Field (NeRF) has successfully reconstructed high-fidelity scenes in natural and medical contexts without these requirements. However, challenges such as sparse-views, intra-scan motion, and complex vessel morphology hinder its direct application to CA data. We introduce NeRF-CA, a first step toward a fully automatic 4D CA reconstruction that achieves reconstructions from sparse coronary angiograms. To the best of our knowledge, we are the first to address the challenges of sparse-views and cardiac motion by decoupling the scene into the moving coronary artery and the static background, effectively translating the problem of motion into a strength. NeRF-CA serves as a first stepping stone for solving the 4D CA reconstruction problem, achieving adequate 4D reconstructions from as few as four angiograms, as required by clinical practice, while significantly outperforming state-of-the-art sparse-view X-ray NeRF. We validate our approach quantitatively and qualitatively using representative 4D phantom datasets and ablation studies. 
 
